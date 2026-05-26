@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecureBoard Admin Logs</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .navbar {
+            background: #101827;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .nav-links a {
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            margin-left: 8px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .page-header h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            margin-bottom: 0;
+            color: #64748b;
+        }
+
+        .flash {
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            background: #e0f2fe;
+            color: #075985;
+            border: 1px solid #bae6fd;
+        }
+
+        .log-card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 18px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        }
+
+        .meta {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .message-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 12px;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .empty {
+            color: #64748b;
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">SecureBoard Admin</div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">View Board</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Admin Logs</h1>
+            <p>View submitted messages, IP addresses, and timestamps.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if logs %}
+            {% for log in logs %}
+                <div class="log-card">
+                    <h2>{{ log.username }}</h2>
+                    <div class="meta">
+                        <strong>ID:</strong> {{ log.id }}<br>
+                        <strong>Time:</strong> {{ log.timestamp }}<br>
+                        <strong>IP:</strong> {{ log.ip_address }}
+                    </div>
+                    <div class="message-box">{{ log.message }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">No logs yet.</div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
