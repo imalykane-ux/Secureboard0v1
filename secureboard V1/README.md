@@ -1,7 +1,7 @@
 # SecureBoard V1
 
-This is a clean rollback-style version of SecureBoard before the attempted upgrades.
-
+This is a clean rollback-style version of SecureBoard before the attempted upgrades. Uploaded on AWS Beanstalk software - 
+http://secureboard-env.eba-p78uihqp.us-east-2.elasticbeanstalk.com
 It includes:
 
 - Public message board
